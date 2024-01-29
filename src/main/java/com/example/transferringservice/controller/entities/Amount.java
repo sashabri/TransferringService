@@ -11,6 +11,11 @@ public class Amount {
     public Amount() {
     }
 
+    public Amount(Integer value, String currency) {
+        this.value = value;
+        this.currency = currency;
+    }
+
     public Integer getValue() {
         return value;
     }

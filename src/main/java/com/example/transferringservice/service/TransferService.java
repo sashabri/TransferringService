@@ -8,5 +8,5 @@ import com.example.transferringservice.exception.InvalidDataException;
 public interface TransferService {
     public String transfer(TransferRequestBody transferRequestBody) throws InvalidDataException;
 
-    public String confirmOperation(ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException;
+    public String confirmOperation(ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException, InvalidDataException;
 }

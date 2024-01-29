@@ -6,8 +6,10 @@ import com.example.transferringservice.exception.InternalServerErrorException;
 import com.example.transferringservice.exception.InvalidDataException;
 import com.example.transferringservice.model.Card;
 import com.example.transferringservice.model.Operation;
+import com.example.transferringservice.repository.CardRepository;
 import com.example.transferringservice.repository.DefaultCardRepository;
 import com.example.transferringservice.repository.DefaultOperation;
+import com.example.transferringservice.repository.OperationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +17,12 @@ public class DefaultTransferService implements TransferService {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultTransferService.class);
 
-    DefaultOperation defaultOperation = new DefaultOperation();
-    DefaultCardRepository defaultCardRepository = new DefaultCardRepository();
+    private OperationRepository defaultOperation;
+    private CardRepository defaultCardRepository;
 
-    public DefaultTransferService() {
+    public DefaultTransferService(OperationRepository defaultOperation, CardRepository defaultCardRepository) {
+        this.defaultOperation = defaultOperation;
+        this.defaultCardRepository = defaultCardRepository;
     }
 
     private void validCardData(Card cardFrom, Card cardTo, TransferRequestBody transferRequestBody) throws InvalidDataException {
@@ -67,7 +71,6 @@ public class DefaultTransferService implements TransferService {
 
     @Override
     public String transfer(TransferRequestBody transferRequestBody) throws InvalidDataException {
-        log.warn("lol");
         Card cardFrom = defaultCardRepository.findCard(transferRequestBody.getCardFromNumber());
         Card cardTo = defaultCardRepository.findCard(transferRequestBody.getCardToNumber());
 
@@ -81,13 +84,18 @@ public class DefaultTransferService implements TransferService {
     }
 
     @Override
-    public String confirmOperation(ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException {
+    public String confirmOperation(ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException, InvalidDataException {
         Operation operation = defaultOperation.find(validOperation(confirmOperationRequestBody));
+
+        if (operation.isSuccess()) {
+            throw new InvalidDataException("Операция уже завершена.");
+        }
+
         if (operation != null) {
             defaultCardRepository.changeBalance(operation.getNumCardFrom(), -operation.getSum());
             defaultCardRepository.changeBalance(operation.getNumCardTo(), operation.getSum());
             defaultOperation.setSuccess(operation.getOperationId());
-            log.warn(
+            log.info(
                     "№ карты, с которой было списание " + operation.getNumCardFrom() +
                             " № карты зачисления " + operation.getNumCardTo() +
                             " сумма списания " + operation.getSum() +

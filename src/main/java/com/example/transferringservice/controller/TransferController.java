@@ -25,7 +25,7 @@ public class TransferController {
     }
 
     @PostMapping("/confirmOperation")
-    public Object confirmOperation(@RequestBody ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException {
+    public Object confirmOperation(@RequestBody ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException, InvalidDataException {
         return new SuccessResponse(defaultTransferService.confirmOperation(confirmOperationRequestBody));
     }
 }

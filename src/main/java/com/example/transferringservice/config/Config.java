@@ -11,10 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
-    @Bean
-    public TransferService defaultTransferService() {
-        return new DefaultTransferService();
-    }
 
     @Bean
     public OperationRepository defaultOperation() {
@@ -24,5 +20,15 @@ public class Config {
     @Bean
     public CardRepository defaultCardRepository() {
         return new DefaultCardRepository();
+    }
+
+    @Bean
+    public TransferService defaultTransferService(
+            CardRepository cardRepository,
+            OperationRepository operationRepository
+    ) {
+        return new DefaultTransferService(
+                operationRepository, cardRepository
+        );
     }
 }
