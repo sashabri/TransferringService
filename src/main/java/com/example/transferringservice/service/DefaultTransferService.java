@@ -56,17 +56,23 @@ public class DefaultTransferService implements TransferService {
         }
     }
 
-    private String validOperation(ConfirmOperationRequestBody confirmOperationRequestBody) {
-        Operation operation = defaultOperation.find(confirmOperationRequestBody.getOperationId());
+    private void validOperation(Operation operation, ConfirmOperationRequestBody confirmOperationRequestBody) throws InvalidDataException{
 
-        if (
-                operation.getCode().equals(confirmOperationRequestBody.getCode()) &&
-                        defaultCardRepository.findCard(operation.getNumCardTo()).getBalance() >= operation.getSum()
-        ) {
-            return operation.getOperationId();
+        if (operation ==  null) {
+            throw new InvalidDataException("Такой операции " + confirmOperationRequestBody.getOperationId() + " не существует.");
         }
 
-        return null;
+        if (!operation.getCode().equals(confirmOperationRequestBody.getCode())) {
+           throw new  InvalidDataException("Неверный код");
+        }
+
+        if (defaultCardRepository.findCard(operation.getNumCardFrom()).getBalance() < operation.getSum()) {
+            throw new InvalidDataException("Недостаточно средств для осуществления перевода.");
+        }
+
+        if (!operation.isSuccess()) {
+            throw new InvalidDataException("Операция уже завершена.");
+        }
     }
 
     @Override
@@ -85,13 +91,10 @@ public class DefaultTransferService implements TransferService {
 
     @Override
     public String confirmOperation(ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException, InvalidDataException {
-        Operation operation = defaultOperation.find(validOperation(confirmOperationRequestBody));
+        Operation operation = defaultOperation.find(confirmOperationRequestBody.getOperationId());
 
-        if (operation.isSuccess()) {
-            throw new InvalidDataException("Операция уже завершена.");
-        }
+        validOperation(operation, confirmOperationRequestBody);
 
-        if (operation != null) {
             defaultCardRepository.changeBalance(operation.getNumCardFrom(), -operation.getSum());
             defaultCardRepository.changeBalance(operation.getNumCardTo(), operation.getSum());
             defaultOperation.setSuccess(operation.getOperationId());
@@ -101,10 +104,7 @@ public class DefaultTransferService implements TransferService {
                             " сумма списания " + operation.getSum() +
                             " операция № " + operation.getOperationId() + " прошла успешно"
             );
-            return operation.getOperationId();
-        } else {
-            throw new InternalServerErrorException("Операция невозможна.");
-        }
 
+            return operation.getOperationId();
     }
 }
