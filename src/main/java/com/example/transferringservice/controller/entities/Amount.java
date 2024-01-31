@@ -1,11 +1,8 @@
 package com.example.transferringservice.controller.entities;
 
-import jakarta.validation.constraints.NotNull;
 
 public class Amount {
-    @NotNull
     private Integer value;
-    @NotNull
     private String currency;
 
     public Amount() {

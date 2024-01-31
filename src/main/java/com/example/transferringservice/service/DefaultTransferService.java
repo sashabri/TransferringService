@@ -70,7 +70,7 @@ public class DefaultTransferService implements TransferService {
             throw new InvalidDataException("Недостаточно средств для осуществления перевода.");
         }
 
-        if (!operation.isSuccess()) {
+        if (operation.isSuccess()) {
             throw new InvalidDataException("Операция уже завершена.");
         }
     }

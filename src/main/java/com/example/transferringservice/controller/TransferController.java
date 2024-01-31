@@ -6,11 +6,14 @@ import com.example.transferringservice.controller.entities.TransferRequestBody;
 import com.example.transferringservice.exception.InternalServerErrorException;
 import com.example.transferringservice.exception.InvalidDataException;
 import com.example.transferringservice.service.TransferService;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping
 public class TransferController {
 
     TransferService defaultTransferService;

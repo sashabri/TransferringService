@@ -1,19 +1,10 @@
 package com.example.transferringservice.controller.entities;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 public class TransferRequestBody {
-    @NotNull
     private String cardFromNumber;
-    @NotNull
     private String cardFromValidTile;
-    @NotNull
-    @Size(min = 3, max = 3)
     private String cardFromCVV;
-    @NotNull
     private String cardToNumber;
-    @NotNull
     private Amount amount;
 
     public TransferRequestBody(String cardFromNumber, String cardFromValidTile, String cardFromCVV, String cardToNumber, Amount amount) {
