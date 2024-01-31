@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  transfer:
+    image: 'transferapp'
+    build: '/.'
+    ports:
+      - '5500:8080'

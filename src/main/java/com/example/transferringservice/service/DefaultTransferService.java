@@ -7,8 +7,6 @@ import com.example.transferringservice.exception.InvalidDataException;
 import com.example.transferringservice.model.Card;
 import com.example.transferringservice.model.Operation;
 import com.example.transferringservice.repository.CardRepository;
-import com.example.transferringservice.repository.DefaultCardRepository;
-import com.example.transferringservice.repository.DefaultOperation;
 import com.example.transferringservice.repository.OperationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,7 @@ public class DefaultTransferService implements TransferService {
             throw new InvalidDataException("Такого номера карты - " + transferRequestBody.getCardToNumber() + " не существует.");
         }
 
-        if (!cardFrom.getExpiryDate().equals(transferRequestBody.getCardFromValidTile())) {
+        if (!cardFrom.getExpiryDate().equals(transferRequestBody.getCardFromValidTill())) {
             throw new InvalidDataException("Срок действия карты - " + transferRequestBody.getCardFromNumber() + " неверный.");
         }
 

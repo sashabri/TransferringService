@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/")
 public class TransferController {
 
     TransferService defaultTransferService;
@@ -22,12 +22,12 @@ public class TransferController {
         this.defaultTransferService = defaultTransferService;
     }
 
-    @PostMapping("/transfer")
+    @PostMapping("transfer")
     public Object transfer(@RequestBody TransferRequestBody transferRequestBody) throws InvalidDataException {
         return new SuccessResponse(defaultTransferService.transfer(transferRequestBody));
     }
 
-    @PostMapping("/confirmOperation")
+    @PostMapping("confirmOperation")
     public Object confirmOperation(@RequestBody ConfirmOperationRequestBody confirmOperationRequestBody) throws InternalServerErrorException, InvalidDataException {
         return new SuccessResponse(defaultTransferService.confirmOperation(confirmOperationRequestBody));
     }

@@ -2,14 +2,13 @@ package com.example.transferringservice.controller.entities;
 
 public class TransferRequestBody {
     private String cardFromNumber;
-    private String cardFromValidTile;
+    private String cardFromValidTill;
     private String cardFromCVV;
     private String cardToNumber;
     private Amount amount;
-
-    public TransferRequestBody(String cardFromNumber, String cardFromValidTile, String cardFromCVV, String cardToNumber, Amount amount) {
+    public TransferRequestBody(String cardFromNumber, String cardFromValidTill, String cardFromCVV, String cardToNumber, Amount amount) {
         this.cardFromNumber = cardFromNumber;
-        this.cardFromValidTile = cardFromValidTile;
+        this.cardFromValidTill = cardFromValidTill;
         this.cardFromCVV = cardFromCVV;
         this.cardToNumber = cardToNumber;
         this.amount = amount;
@@ -19,8 +18,8 @@ public class TransferRequestBody {
         return cardFromNumber;
     }
 
-    public String getCardFromValidTile() {
-        return cardFromValidTile;
+    public String getCardFromValidTill() {
+        return cardFromValidTill;
     }
 
     public String getCardFromCVV() {
@@ -39,8 +38,8 @@ public class TransferRequestBody {
         this.cardFromNumber = cardFromNumber;
     }
 
-    public void setCardFromValidTile(String cardFromValidTile) {
-        this.cardFromValidTile = cardFromValidTile;
+    public void setCardFromValidTill(String cardFromValidTill) {
+        this.cardFromValidTill = cardFromValidTill;
     }
 
     public void setCardFromCVV(String cardFromCVV) {
