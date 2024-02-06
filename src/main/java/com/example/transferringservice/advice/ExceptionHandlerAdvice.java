@@ -1,6 +1,6 @@
 package com.example.transferringservice.advice;
 
-import com.example.transferringservice.controller.entities.UnsuccessfulResponse;
+import com.example.transferringservice.controller.dto.UnsuccessfulResponse;
 import com.example.transferringservice.exception.InternalServerErrorException;
 import com.example.transferringservice.exception.InvalidDataException;
 import org.springframework.http.HttpStatus;

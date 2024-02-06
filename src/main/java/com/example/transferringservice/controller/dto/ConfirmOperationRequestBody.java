@@ -1,4 +1,4 @@
-package com.example.transferringservice.controller.entities;
+package com.example.transferringservice.controller.dto;
 
 public class ConfirmOperationRequestBody {
     private String operationId;

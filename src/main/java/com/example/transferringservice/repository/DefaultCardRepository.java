@@ -1,10 +1,11 @@
 package com.example.transferringservice.repository;
 
 import com.example.transferringservice.model.Card;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class DefaultCardRepository implements CardRepository {
 
     private List<Card> cards = new ArrayList<>();

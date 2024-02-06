@@ -1,8 +1,8 @@
 package com.example.transferringservice;
 
-import com.example.transferringservice.controller.entities.Amount;
-import com.example.transferringservice.controller.entities.SuccessResponse;
-import com.example.transferringservice.controller.entities.TransferRequestBody;
+import com.example.transferringservice.controller.dto.Amount;
+import com.example.transferringservice.controller.dto.SuccessResponse;
+import com.example.transferringservice.controller.dto.TransferRequestBody;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
